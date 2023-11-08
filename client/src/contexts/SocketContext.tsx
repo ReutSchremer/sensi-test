@@ -1,12 +1,14 @@
-import { FC, ReactNode, createContext, useEffect } from "react";
+import { FC, ReactNode, createContext, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 import { useImmer } from "use-immer";
 import { EventType } from "../common/enums/event-type.enum";
 import { ElderEvent } from "../common/types/elder-event.type";
+import { useOpenAlert } from "./AlertContext";
+import { ALERT_LIMIT } from "../common/consts/constants";
 
-type EventsData = Record<EventType, { time: Date, value: number }[]>;
+type EventsData = Record<EventType, ElderEvent[]>;
 
-const SocketContext = createContext<null | EventsData>(null);
+const SocketContext = createContext<EventsData>(initData());
 
 const socketUri = 'http://localhost:8080';
 
@@ -21,20 +23,20 @@ interface SocketContextProps {
 export const SocketContextProvider: FC<SocketContextProps> = ({ children }) => {
 
     const [data, setData] = useImmer<EventsData>(initData());
-
+    const openAlert = useOpenAlert();
     useEffect(() => {
         socket.on('elderEvent', handleNewEvent);
-
         return () => { socket.removeListener('elderEvent'); }
     }, [])
 
 
     function handleNewEvent(data: ElderEvent) {
-        console.log("DATA", data)
         setData(draft => {
-            draft[data.type].push({ time: data.time, value: data.value });
+            draft[data.type].push(data);
         })
 
+        if (data.value >= ALERT_LIMIT)
+            openAlert(data);
     }
 
     return (
@@ -44,6 +46,8 @@ export const SocketContextProvider: FC<SocketContextProps> = ({ children }) => {
     );
 };
 
+
+export const useEventsData = () => useContext(SocketContext);
 
 
 

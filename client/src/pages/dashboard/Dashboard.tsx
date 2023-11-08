@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { DataGraph } from '../../components/graph/DataGraph';
 
 
 
@@ -11,8 +12,9 @@ export const Dashboard: FC<DashboardProps> = ({ }) => {
 
 
     return (
-        <div>
-            dashboard
+        <div className='dashboard-page'>
+            <h1>Elder Data</h1>
+            <DataGraph />
         </div>
     );
 };

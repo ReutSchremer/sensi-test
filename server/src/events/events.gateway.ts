@@ -16,6 +16,6 @@ export class EventsGateway {
 
     @OnEvent('elderEvent.*')
     handleOrderCreatedEvent(payload: ElderEvent) {
-        this.socket.emit(`elderEvent`, { ...payload, time: new Date() });
+        this.socket.emit(`elderEvent`, { ...payload, date: Date.now() });
     }
 }
