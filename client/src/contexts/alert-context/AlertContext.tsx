@@ -18,7 +18,7 @@ export const AlertContextProvider: FC<AlertContextProps> = ({ children }) => {
         <AlertContext.Provider value={setData}>
             {children}
 
-            <Dialog open={!!data} fullWidth className='Alert-Comp' >
+            <Dialog open={!data} fullWidth className='Alert-Comp' >
                 <div className='alert-container'>
                     <DialogTitle> Alert!</DialogTitle>
                     <DialogContent>

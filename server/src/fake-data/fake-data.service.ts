@@ -21,9 +21,9 @@ export class FakeDataService {
 
 
 
-
-
-
+    /**
+     * Create fake events randomly on random times 
+     */
     async createFakeData() {
         const events = Object.keys(EventType) as EventType[];
         const randomEvent = events[Math.floor(Math.random() * events.length)];
