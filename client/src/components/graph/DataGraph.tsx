@@ -8,8 +8,7 @@ import { Line } from 'react-chartjs-2';
 import { graphColors } from '../../common/consts/graph-colors.const';
 import { EventType } from '../../common/enums/event-type.enum';
 import { useEventsData } from '../../contexts/SocketContext';
-
-
+import './DataGraph.scss';
 
 ChartJS.register(
     CategoryScale,
@@ -21,6 +20,7 @@ ChartJS.register(
     Legend,
     TimeScale
 );
+
 
 const options: ChartOptions<"line"> = {
     responsive: true,
@@ -57,6 +57,7 @@ const options: ChartOptions<"line"> = {
 
 interface DataGraphProps { }
 export const DataGraph: FC<DataGraphProps> = ({ }) => {
+
     const eventsData = useEventsData();
 
     const chartData = {
@@ -65,13 +66,15 @@ export const DataGraph: FC<DataGraphProps> = ({ }) => {
             data: eventsData[type].map(item => ({
                 x: moment(new Date(item.date)), y: item.value
             })),
-            borderColor: graphColors[type],
-            backgroundColor: graphColors[type]
+            borderColor: graphColors[type].border,
+            backgroundColor: graphColors[type].fill
         }))
     }
 
+
+
     return (
-        <div style={{ height: '50vh', width: '90vw' }}>
+        <div className='data-line-chart'>
             <Line
                 options={options}
                 data={chartData}

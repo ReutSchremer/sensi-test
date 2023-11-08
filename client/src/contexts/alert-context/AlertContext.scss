@@ -1,0 +1,16 @@
+.Alert-Comp {
+    align-items: center;
+    text-align: center;
+
+    .alert-container {
+        border: 2px solid red;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .close-button {
+        margin: 0 auto 2vh auto;
+    }
+}

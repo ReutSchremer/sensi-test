@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { useImmer } from "use-immer";
 import { EventType } from "../common/enums/event-type.enum";
 import { ElderEvent } from "../common/types/elder-event.type";
-import { useOpenAlert } from "./AlertContext";
+import { useOpenAlert } from "./alert-context/AlertContext";
 import { ALERT_LIMIT } from "../common/consts/constants";
 
 type EventsData = Record<EventType, ElderEvent[]>;
